@@ -1,4 +1,4 @@
-#tool nuget:?package=GitVersion.CommandLine&version=3.6.2
+#tool nuget:?package=GitVersion.CommandLine&version=4.0.0
 
 public sealed class SpectreVersion
 {
