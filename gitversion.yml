@@ -1,3 +1,2 @@
 mode: ContinuousDeployment
-continuous-delivery-fallback-tag: build
 commit-message-incrementing: Enabled
