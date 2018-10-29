@@ -65,6 +65,7 @@ public sealed class SpectreTasks
         Publish?.IsDependentOn(Pack);
 
         // Connect "batteries included" tasks with their parents.
+        Clean?.IsDependentOn(CleanArtifacts, true);
         Clean?.IsDependentOn(CleanBinaries, parameters.Features.CleanBinaries);
         Restore?.IsDependentOn(RestoreNuGetPackages, parameters.Features.RestoreNuGetPackages);
         Build?.IsDependentOn(BuildSolution, parameters.Features.BuildSolution);
