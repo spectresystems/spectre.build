@@ -1,11 +1,10 @@
 #load "mod.cake"
 
-Task(SpectreTasks.Clean)
-    .IsDependentOn(SpectreTasks.CleanArtifacts)
-    .IsDependentOn(SpectreTasks.CleanBinaries);
+Task(SpectreTasks.Clean);
 
 // Clean artifacts
 Task(SpectreTasks.CleanArtifacts)
+    .PartOf(SpectreTasks.Clean)
     .Does<SpectreData>(data => 
 {
     CleanDirectory(data.Paths.Artifacts);
@@ -15,6 +14,7 @@ Task(SpectreTasks.CleanArtifacts)
 
 // Clean binaries
 Task(SpectreTasks.CleanBinaries)
+    .PartOf(SpectreTasks.Publish)
     .WithCriteria<SpectreData>((ctx, data) => data.Rebuild, "Incremental build")
     .Does<SpectreData>(data => 
 {

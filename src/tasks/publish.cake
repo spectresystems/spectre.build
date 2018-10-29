@@ -2,14 +2,11 @@
 
 Task(SpectreTasks.Publish)
     .IsDependentOn(SpectreTasks.Test)
-    .IsDependentOn(SpectreTasks.Pack)
-    .IsDependentOn(SpectreTasks.PublishAppVeyorArtifacts)
-    .IsDependentOn(SpectreTasks.PublishNuGetPackages);
+    .IsDependentOn(SpectreTasks.Pack);
 
 // Upload AppVeyor artifacts
 Task(SpectreTasks.PublishAppVeyorArtifacts)
-    .IsDependentOn(SpectreTasks.Test)
-    .IsDependentOn(SpectreTasks.Pack)
+    .PartOf(SpectreTasks.Publish)
     .OnlyOnAppVeyor()
     .IfThereAreNuGetPackages()
     .Does<SpectreData>((context, data) => 
@@ -22,8 +19,7 @@ Task(SpectreTasks.PublishAppVeyorArtifacts)
 
 // Publish packages to NuGet
 Task(SpectreTasks.PublishNuGetPackages)
-    .IsDependentOn(SpectreTasks.Test)
-    .IsDependentOn(SpectreTasks.Pack)
+    .PartOf(SpectreTasks.Publish)
     .OnlyOnBuildServer()
     .OnlyOnMasterBranch()
     .RequiresTaggedBuild()
@@ -45,5 +41,5 @@ Task(SpectreTasks.PublishNuGetPackages)
             ApiKey = data.NuGet.ApiKey,
             Source = data.NuGet.Feed
         });
-    }    
+    }
 });

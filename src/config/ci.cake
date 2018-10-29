@@ -28,6 +28,14 @@ public sealed class SpectreCI
         IsMaintenanceBuild = isMaintenanceBuild;
     }
 
+    public void Dump(ICakeContext context)
+    {
+        context.Verbose("Local build? {0}", IsLocal ? "Yes" : "No");
+        context.Verbose("Pull request? {0}", IsPullRequest ? "Yes" : "No");
+        context.Verbose("Master branch? {0}", IsMasterBranch ? "Yes" : "No");
+        context.Verbose("Tagged build? {0}", IsTaggedBuild ? "Yes" : "No");
+    }
+
     private static bool IsBuildTagged(BuildSystem buildSystem)
     {
         return buildSystem.AppVeyor.Environment.Repository.Tag.IsTag

@@ -2,12 +2,10 @@
 
 Task(SpectreTasks.Build)
     .IsDependentOn(SpectreTasks.Clean)
-    .IsDependentOn(SpectreTasks.Restore)
-    .IsDependentOn(SpectreTasks.BuildSolution);
+    .IsDependentOn(SpectreTasks.Restore);
     
 Task(SpectreTasks.BuildSolution)
-    .IsDependentOn(SpectreTasks.Clean)
-    .IsDependentOn(SpectreTasks.Restore)
+    .PartOf(SpectreTasks.Build)
     .OnlyRunIfThereAreSolutions()
     .Does<SpectreData>((context, data) =>
 {

@@ -22,4 +22,16 @@ public sealed class SpectreData
         CI = new SpectreCI(context);
         NuGet = new SpectreNuGet(context);
     }
+
+    public void Dump(ICakeContext context)
+    {
+        Version.Dump(context);
+        
+        context.Information("Configuration: {0}", Configuration);
+        context.Information("Rebuild? {0}", Rebuild ? "Yes" : "No");
+
+        Paths.Dump(context);
+        CI.Dump(context);
+        NuGet.Dump(context);
+    }
 }

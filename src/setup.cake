@@ -3,10 +3,7 @@
 Setup<SpectreData>(context => 
 {
     var data = new SpectreData(context, Spectre.Parameters);
-
-    context.Information("Version: {0}", data.Version.SemanticVersion);
-    context.Information("Configuration: {0}", data.Configuration);
-    context.Information("Publish feed: {0}", data.NuGet.Feed);
+    data.Dump(context);
 
     if(context.HasArgument("dryrun"))
     {

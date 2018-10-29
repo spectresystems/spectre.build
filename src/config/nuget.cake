@@ -16,4 +16,10 @@ public sealed class SpectreNuGet
                 "SPECTRE_" + name.Replace("-", "_").ToUpperInvariant()
             ) ?? defaultValue);
     }
+
+    public void Dump(ICakeContext context)
+    {
+        context.Verbose("NuGet API key? {0}", !string.IsNullOrWhiteSpace(ApiKey) ? "Yes" : "No");
+        context.Verbose("NuGet feed: {0}", Feed ?? "N/A");
+    }
 }

@@ -10,4 +10,11 @@ public sealed class SpectrePaths
         Packages = Artifacts.Combine("packages");
         NuGetPackages = Packages.Combine("nuget");
     }
+
+    public void Dump(ICakeContext context)
+    {
+        context.Verbose("Artifacts: {0}", Artifacts.FullPath);
+        context.Verbose("Packages: {0}", Packages.FullPath);
+        context.Verbose("NuGet packages: {0}", NuGetPackages.FullPath);
+    }
 }

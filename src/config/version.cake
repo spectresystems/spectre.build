@@ -35,7 +35,7 @@ public sealed class SpectreVersion
             var major = assertedVersions.Major;
             var minor = assertedVersions.Minor;
             var patch = assertedVersions.Patch;
-            var revision = assertedVersions.PreReleaseNumber ?? 999;
+            var revision = assertedVersions.PreReleaseNumber ?? 0;
 
             version = assertedVersions.MajorMinorPatch;
             semVersion = assertedVersions.LegacySemVerPadded;
@@ -54,5 +54,12 @@ public sealed class SpectreVersion
         MajorMinorPatchRevision = fullVersion;
         SemanticVersion = semVersion;
         MsiVersion = msiVersion;
+    }
+
+    public void Dump(ICakeContext context)
+    {
+        context.Information("Version: {0}", MajorMinorPatchRevision);
+        context.Information("Semantic version: {0}", SemanticVersion);
+        context.Verbose("MSI version: {0}", MsiVersion);     
     }
 }
