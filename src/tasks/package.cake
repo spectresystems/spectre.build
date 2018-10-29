@@ -1,4 +1,3 @@
-#load "../config/mod.cake"
 #load "mod.cake"
 
 Task(SpectreTasks.Pack)

@@ -1,11 +1,9 @@
 #load "mod.cake"
-#load "../parameters.cake"
 
 public sealed class SpectreData
 {
     public string Configuration { get; }
     public bool Rebuild { get; }
-    public bool PublishRequiresTaggedBuild { get; }
 
     public SpectrePaths Paths { get; }
     public SpectreFiles Files { get; }
@@ -17,7 +15,6 @@ public sealed class SpectreData
     {
         Configuration = context.Argument("configuration", "Release");
         Rebuild = context.HasArgument("rebuild");
-        PublishRequiresTaggedBuild = parameters.RequireTaggedBuildForPublish;
 
         Paths = new SpectrePaths(context);
         Files = new SpectreFiles(context);

@@ -1,4 +1,3 @@
-#load "data.cake"
 #load "paths.cake"
 #load "files.cake"
 #load "version.cake"

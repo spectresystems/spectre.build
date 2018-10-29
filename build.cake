@@ -26,7 +26,6 @@ Task("Pack-Scripts")
             }
         },
         Version = data.Version.SemanticVersion,
-
     });
 });
 

@@ -1,4 +1,4 @@
-#load "../config/mod.cake"
+#load "mod.cake"
 
 public static CakeTaskBuilder OnlyRunIfThereAreUnitTests(this CakeTaskBuilder builder)
 {
@@ -50,7 +50,7 @@ public static CakeTaskBuilder OnlyOnMasterBranch(this CakeTaskBuilder builder)
 public static CakeTaskBuilder RequiresTaggedBuild(this CakeTaskBuilder builder)
 {
     return builder.WithCriteria<SpectreData>(
-        (ctx, data) => data.PublishRequiresTaggedBuild && data.CI.IsTaggedBuild,
+        (ctx, data) => data.CI.IsTaggedBuild,
         "Not a tagged build"
     );
 }

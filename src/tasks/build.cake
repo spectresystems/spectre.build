@@ -1,13 +1,13 @@
 #load "mod.cake"
-#load "../config/mod.cake"
-#load "../extensions/mod.cake"
 
 Task(SpectreTasks.Build)
     .IsDependentOn(SpectreTasks.Clean)
-    .IsDependentOn(SpectreTasks.Restore);
-
+    .IsDependentOn(SpectreTasks.Restore)
+    .IsDependentOn(SpectreTasks.BuildSolution);
+    
 Task(SpectreTasks.BuildSolution)
-    .PartOf(SpectreTasks.Build)
+    .IsDependentOn(SpectreTasks.Clean)
+    .IsDependentOn(SpectreTasks.Restore)
     .OnlyRunIfThereAreSolutions()
     .Does<SpectreData>((context, data) =>
 {

@@ -1,12 +1,10 @@
 #load "mod.cake"
-#load "../config/mod.cake"
-#load "../extensions/mod.cake"
 
-Task(SpectreTasks.Restore);
+Task(SpectreTasks.Restore)
+    .IsDependentOn(SpectreTasks.RestoreNuGetPackages);
 
 // Restore NuGet Packages
 Task(SpectreTasks.RestoreNuGetPackages)
-    .PartOf(SpectreTasks.Restore)
     .OnlyRunIfThereAreSolutions()
     .Does<SpectreData>((context, data) =>
 {

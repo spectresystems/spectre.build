@@ -1,13 +1,12 @@
 #load "mod.cake"
-#load "../config/mod.cake"
-#load "../extensions/mod.cake"
 
 Task(SpectreTasks.Test)
-    .IsDependentOn(SpectreTasks.Build);
+    .IsDependentOn(SpectreTasks.Build)
+    .IsDependentOn(SpectreTasks.RunUnitTests);
 
 // Run unit tests
 Task(SpectreTasks.RunUnitTests)
-    .PartOf(SpectreTasks.Test)
+    .IsDependentOn(SpectreTasks.Build)
     .OnlyRunIfThereAreUnitTests()
     .Does<SpectreData>((context, data) =>
 {

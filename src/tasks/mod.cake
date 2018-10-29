@@ -1,3 +1,6 @@
+#load "../data.cake"
+#load "../criterias.cake"
+
 #load "build.cake"
 #load "clean.cake"
 #load "package.cake"

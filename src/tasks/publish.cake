@@ -2,11 +2,14 @@
 
 Task(SpectreTasks.Publish)
     .IsDependentOn(SpectreTasks.Test)
-    .IsDependentOn(SpectreTasks.Pack);
+    .IsDependentOn(SpectreTasks.Pack)
+    .IsDependentOn(SpectreTasks.PublishAppVeyorArtifacts)
+    .IsDependentOn(SpectreTasks.PublishNuGetPackages);
 
 // Upload AppVeyor artifacts
 Task(SpectreTasks.PublishAppVeyorArtifacts)
-    .PartOf(SpectreTasks.Publish)
+    .IsDependentOn(SpectreTasks.Test)
+    .IsDependentOn(SpectreTasks.Pack)
     .OnlyOnAppVeyor()
     .IfThereAreNuGetPackages()
     .Does<SpectreData>((context, data) => 
@@ -19,7 +22,8 @@ Task(SpectreTasks.PublishAppVeyorArtifacts)
 
 // Publish packages to NuGet
 Task(SpectreTasks.PublishNuGetPackages)
-    .PartOf(SpectreTasks.Publish)
+    .IsDependentOn(SpectreTasks.Test)
+    .IsDependentOn(SpectreTasks.Pack)
     .OnlyOnBuildServer()
     .OnlyOnMasterBranch()
     .RequiresTaggedBuild()

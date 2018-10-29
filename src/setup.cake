@@ -1,5 +1,4 @@
 #load "mod.cake"
-#load "config/mod.cake"
 
 Setup<SpectreData>(context => 
 {
