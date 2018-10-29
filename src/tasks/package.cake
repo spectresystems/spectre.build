@@ -1,11 +1,11 @@
 #load "mod.cake"
 
-Task(SpectreTasks.Pack)
-    .IsDependentOn(SpectreTasks.Build)
+Spectre.Tasks.Pack = Task("Pack")
     .Does<SpectreData>((context, data) => 
 {
-   foreach(var package in GetFiles($"{data.Paths.NuGetPackages}/*.nupkg"))
-   {
-       data.Files.NuGetPackages.Add(package);
-   }
+    context.Verbose("Collecting packages...");
+    foreach(var package in GetFiles($"{data.Paths.NuGetPackages}/*.nupkg"))
+    {
+        data.Files.NuGetPackages.Add(package);
+    }
 });

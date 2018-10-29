@@ -1,11 +1,9 @@
 #load "mod.cake"
 
-Task(SpectreTasks.Test)
-    .IsDependentOn(SpectreTasks.Build);
+Spectre.Tasks.Test = Task("Test");
 
 // Run unit tests
-Task(SpectreTasks.RunUnitTests)
-    .PartOf(SpectreTasks.Test)
+Spectre.Tasks.RunUnitTests = Task("Unit-Tests")
     .OnlyRunIfThereAreUnitTests()
     .Does<SpectreData>((context, data) =>
 {

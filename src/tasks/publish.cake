@@ -1,12 +1,9 @@
 #load "mod.cake"
 
-Task(SpectreTasks.Publish)
-    .IsDependentOn(SpectreTasks.Test)
-    .IsDependentOn(SpectreTasks.Pack);
+Spectre.Tasks.Publish = Task("Publish");
 
 // Upload AppVeyor artifacts
-Task(SpectreTasks.PublishAppVeyorArtifacts)
-    .PartOf(SpectreTasks.Publish)
+Spectre.Tasks.PublishAppVeyorArtifacts = Task("Publish-AppVeyor")
     .OnlyOnAppVeyor()
     .IfThereAreNuGetPackages()
     .Does<SpectreData>((context, data) => 
@@ -18,8 +15,7 @@ Task(SpectreTasks.PublishAppVeyorArtifacts)
 });
 
 // Publish packages to NuGet
-Task(SpectreTasks.PublishNuGetPackages)
-    .PartOf(SpectreTasks.Publish)
+Spectre.Tasks.PublishNuGetPackages = Task("Publish-NuGet")
     .OnlyOnBuildServer()
     .OnlyOnMasterBranch()
     .RequiresTaggedBuild()
