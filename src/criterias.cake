@@ -47,6 +47,22 @@ public static CakeTaskBuilder OnlyOnMasterBranch(this CakeTaskBuilder builder)
     );
 }
 
+public static CakeTaskBuilder OnlyForIncrementalBuild(this CakeTaskBuilder builder)
+{
+    return builder.WithCriteria<SpectreData>(
+        (ctx, data) => !data.Rebuild,
+        "Not an incremental build"
+    );
+}
+
+public static CakeTaskBuilder OnlyForRebuild(this CakeTaskBuilder builder)
+{
+    return builder.WithCriteria<SpectreData>(
+        (ctx, data) => data.Rebuild,
+        "Not a rebuild"
+    );
+}
+
 public static CakeTaskBuilder RequiresTaggedBuild(this CakeTaskBuilder builder)
 {
     return builder.WithCriteria<SpectreData>(

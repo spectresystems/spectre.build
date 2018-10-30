@@ -13,7 +13,7 @@ Spectre.Tasks.CleanArtifacts = Task("Clean-Artifacts")
 
 // Clean binaries
 Spectre.Tasks.CleanBinaries = Task("Clean-Binaries")
-    .WithCriteria<SpectreData>((ctx, data) => data.Rebuild, "Incremental build")
+    .OnlyForRebuild()
     .Does<SpectreData>(data => 
 {
     CleanDirectories($"./src/**/bin/{data.Configuration}");
