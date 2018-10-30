@@ -4,10 +4,10 @@
 // SETUP
 ///////////////////////////////////////////////////////////////////////////////
 
-Spectre.Parameters.Features.CleanBinaries = false;
-Spectre.Parameters.Features.RestoreNuGetPackages = false;
-Spectre.Parameters.Features.BuildSolution = false;
-Spectre.Parameters.Features.RunUnitTests = false;
+// Spectre.Parameters.Features.CleanBinaries = false;
+// Spectre.Parameters.Features.RestoreNuGetPackages = false;
+// Spectre.Parameters.Features.BuildSolution = false;
+// Spectre.Parameters.Features.RunUnitTests = false;
 
 ///////////////////////////////////////////////////////////////////////////////
 // TASKS

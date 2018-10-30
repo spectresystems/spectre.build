@@ -65,13 +65,37 @@ public sealed class SpectreTasks
         Publish?.IsDependentOn(Pack);
 
         // Connect "batteries included" tasks with their parents.
-        Clean?.IsDependentOn(CleanArtifacts, true);
-        Clean?.IsDependentOn(CleanBinaries, parameters.Features.CleanBinaries);
-        Restore?.IsDependentOn(RestoreNuGetPackages, parameters.Features.RestoreNuGetPackages);
-        Build?.IsDependentOn(BuildSolution, parameters.Features.BuildSolution);
-        Test?.IsDependentOn(RunUnitTests, parameters.Features.RunUnitTests);
-        Publish?.IsDependentOn(PublishAppVeyorArtifacts, parameters.Features.PublishAppVeyorArtifacts);
-        Publish?.IsDependentOn(PublishNuGetPackages, parameters.Features.PublishNuGetPackages);
+        CleanArtifacts?.PartOf(Clean, true);
+        CleanBinaries?.PartOf(Clean, parameters.Features.CleanBinaries);
+        RestoreNuGetPackages?.PartOf(Restore, parameters.Features.RestoreNuGetPackages);
+        BuildSolution?.PartOf(Build, parameters.Features.BuildSolution);
+        RunUnitTests?.PartOf(Test, parameters.Features.RunUnitTests);
+        PublishAppVeyorArtifacts?.PartOf(Publish, parameters.Features.PublishAppVeyorArtifacts);
+        PublishNuGetPackages?.PartOf(Publish, parameters.Features.PublishNuGetPackages);
+
+        // Find children and attach them to their grand parents.
+        // This so we can keep the task chain if a child task is executed directly.
+        foreach(var child in _engineTasks.Where(t => t.Dependees.Count > 0))
+        {
+            // Find the dependents parents.
+            var parentNames = new HashSet<string>(child.Dependees.Select(x => x.Name), StringComparer.OrdinalIgnoreCase);
+            var parentTasks = _engineTasks.Where(t => parentNames.Contains(t.Name));
+
+            // Find the dependents grand parents.
+            var grandParents = parentTasks.SelectMany(p => p.Dependencies).ToArray();
+            var grandParentNames = grandParents.Select(g => g.Name);
+
+            if (grandParents.Length > 0)
+            {
+                context.Debug("{0} is a child to {1}, and grandchild to {2}",
+                    child.Name,  string.Join(" and ", parentNames), string.Join(" and ", grandParentNames));
+
+                foreach(var grandParent in grandParents)
+                {
+                    child.Dependencies.Add(new CakeTaskDependency(grandParent.Name, grandParent.Required));
+                }
+            }
+        }
     }
 
     private void RemoveTask(CakeTaskBuilder builder, bool condition)
@@ -99,11 +123,11 @@ public static CakeTaskBuilder PartOf(this CakeTaskBuilder builder, CakeTaskBuild
     return builder;
 }
 
-public static CakeTaskBuilder IsDependentOn(this CakeTaskBuilder builder, CakeTaskBuilder task, bool condition)
+public static CakeTaskBuilder PartOf(this CakeTaskBuilder builder, CakeTaskBuilder task, bool condition)
 {
     if(task != null && condition)
     {
-        builder.IsDependentOn(task);
+        builder.IsDependeeOf(task.Task.Name);
     }
     return builder;
 }
