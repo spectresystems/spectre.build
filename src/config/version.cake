@@ -56,10 +56,13 @@ public sealed class SpectreVersion
         MsiVersion = msiVersion;
     }
 
-    public void Dump(ICakeContext context)
+    public void Dump(ICakeContext context, bool showMsiVersion)
     {
         context.Information("Version: {0}", MajorMinorPatchRevision);
         context.Information("Semantic version: {0}", SemanticVersion);
-        context.Verbose("MSI version: {0}", MsiVersion);     
+
+        if (showMsiVersion) {
+            context.Information("MSI version: {0}", MsiVersion);
+        }
     }
 }

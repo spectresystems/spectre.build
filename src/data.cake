@@ -23,9 +23,9 @@ public sealed class SpectreData
         NuGet = new SpectreNuGet(context);
     }
 
-    public void Dump(ICakeContext context)
+    public void Dump(ICakeContext context, BuildParameters parameters)
     {
-        Version.Dump(context);
+        Version.Dump(context, parameters.Features.ShowMsiVersion);
         
         context.Information("Configuration: {0}", Configuration);
         context.Information("Rebuild? {0}", Rebuild ? "Yes" : "No");

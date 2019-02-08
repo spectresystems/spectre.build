@@ -8,6 +8,7 @@ public sealed class SpectreFeatures
     public bool RunUnitTests { get; set; } = true;
     public bool PublishAppVeyorArtifacts { get; set; } = true;
     public bool PublishNuGetPackages { get; set; } = true;
+    public bool ShowMsiVersion { get; set; } = false;
 }
 
 public sealed class BuildParameters

@@ -3,7 +3,7 @@
 Setup<SpectreData>(context => 
 {
     var data = new SpectreData(context, Spectre.Parameters);
-    data.Dump(context);
+    data.Dump(context, Spectre.Parameters);
 
     if(context.HasArgument("dryrun"))
     {
