@@ -70,3 +70,11 @@ public static CakeTaskBuilder RequiresTaggedBuild(this CakeTaskBuilder builder)
         "Not a tagged build"
     );
 }
+
+public static CakeTaskBuilder Disable(this CakeTaskBuilder builder)
+{
+    return builder.WithCriteria<SpectreData>(
+        (ctx, data) => false,
+        "Task have been disabled"
+    );
+}
